@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI命運角色抽牌</title>
+  <style>
+    body {
+      background: linear-gradient(#0d0d0d, #1a1a1a);
+      color: white;
+      font-family: "Segoe UI", sans-serif;
+      text-align: center;
+      padding: 2em;
+    }
+    .card {
+      width: 280px;
+      height: 420px;
+      margin: 2em auto;
+      perspective: 1000px;
+    }
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+      cursor: pointer;
+    }
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border: 2px solid gold;
+      border-radius: 12px;
+    }
+    .card-front {
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/RWS_Tarot_00_Fool.jpg/330px-RWS_Tarot_00_Fool.jpg') center/cover;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1em;
+    }
+    .card-back img {
+      max-width: 90%;
+      border-radius: 10px;
+    }
+    #revealText {
+      margin-top: 1em;
+      font-size: 1.2em;
+      color: #ffcc00;
+    }
+  </style>
+</head>
+<body>
+  <h1>一測定命運</h1>
+  <p>點擊下方牌卡，揭曉你的 AI 角色命運！</p>
+
+  <div class="card" id="card">
+    <div class="card-inner">
+      <div class="card-front"></div>
+      <div class="card-back">
+        <img id="resultImage" src="" alt="命運角色卡">
+      </div>
+    </div>
+  </div>
+
+  <div id="revealText"></div>
+
+  <script>
+    const card = document.getElementById("card");
+    const resultImage = document.getElementById("resultImage");
+    const revealText = document.getElementById("revealText");
+
+    const roles = [
+      {
+        name: "靜心貓・月光觀者",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Tarot_card_-_The_Moon.jpg/640px-Tarot_card_-_The_Moon.jpg"
+      },
+      {
+        name: "情感豹・戀人信使",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/RWS_Tarot_06_Lovers.jpg/640px-RWS_Tarot_06_Lovers.jpg"
+      },
+      {
+        name: "意志狐・皇帝智者",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/RWS_Tarot_04_Emperor.jpg/640px-RWS_Tarot_04_Emperor.jpg"
+      },
+      {
+        name: "星辰鳥・夢語者",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/The_Star.jpg/640px-The_Star.jpg"
+      },
+      {
+        name: "黑焰狼・死神轉生者",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/RWS_Tarot_13_Death.jpg/640px-RWS_Tarot_13_Death.jpg"
+      },
+      {
+        name: "靈感蛇・女祭司守門人",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/RWS_Tarot_02_High_Priestess.jpg/640px-RWS_Tarot_02_High_Priestess.jpg"
+      }
+    ];
+
+    card.addEventListener("click", () => {
+      if (!card.classList.contains("flipped")) {
+        const chosen = roles[Math.floor(Math.random() * roles.length)];
+        resultImage.src = chosen.image;
+        revealText.textContent = `你的角色是：${chosen.name}`;
+        card.classList.add("flipped");
+      } else {
+        card.classList.remove("flipped");
+        revealText.textContent = "";
+        resultImage.src = "";
+      }
+    });
+  </script>
+</body>
+</html>
